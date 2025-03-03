@@ -1,1 +1,5 @@
 # SQL
+
+select *
+from
+books
