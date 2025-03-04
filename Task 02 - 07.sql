@@ -7,7 +7,15 @@ c. Write SQL queries to show:
 a) books that have the number of their copies less than average number of all books copies;
 b) ids and dates of all subscriptions occurred during the first year of the library work (i.e., up to Dec 31st of the year when the first subscription had happened).
 */
-# c
+#c b
+SELECT
+	sb_id, sb_start, sb_finish
+FROM
+	subscriptions
+WHERE year(sb_start) = (SELECT MIN(YEAR(sb_start)) FROM subscriptions)
+
+
+# c a
 SELECT 
     AVG(b_quantity)
 FROM
