@@ -5,18 +5,59 @@ Show the average quantity of books each reader currently has
 taken.
 */
 
+SELECT
+	sb_subscriber, AVG(count(sb_book)) as average
+FROM
+	subscriptions
+GROUP BY sb_subscriber
+
+
+
+SELECT
+	 sb_subscriber, s_name, count(sb_subscriber)
+FROM
+	subscriptions
+JOIN
+	subscribers ON sb_id = s_id
+GROUP BY sb_subscriber
+
+SELECT 
+	DISTINCT s_id,
+	subscribers.s_name
+FROM
+	subscriptions
+JOIN
+	subscribers ON s_id = sb_subscriber
+    
 #вывести читателей и дополнительно среднее количество книг
-select
-sb_subscriber, d.average
-from  subscriptions
+
+SELECT s.sb_subscriber, ss.s_name,  COUNT(s.sb_book) as bookQunatity
+FROM  subscriptions as s
+JOIN
+	subscribers ON sb_id = s_id
+GROUP BY sb_subscriber
+
+WHERE bookQunatity = (select AVG(sb_subscriber) from subscriptions)
+GROUP BY sb_subscriber
+
 JOIN (
 		SELECT AVG(sb_book) AS average from subscriptions) AS d
+JOIN
+	subscribers ON sb_id = s_id
+
+select DISTINCT sb_subscriber, sb_id # s_name,
+COUNT(sb_book) as bookQunatity
+from  subscriptions
+
+GROUP BY sb_subscriber
+
+        
 
 SELECT AVG(sb_book)  as average from subscriptions
 
 
 SELECT average
-from (SELECT AVG(sb_book)  as average from subscriptions)
+from (SELECT AVG(sb_book)  as average from subscriptions) as tempary
 
 WHERE sb_is_active = 'Y'
 
